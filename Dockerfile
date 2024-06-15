@@ -28,5 +28,10 @@ RUN apt-get install --no-install-recommends -y nodejs \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN source /root/.cargo/env
 
+# Install Git
+RUN apt-get update && apt-get install --no-install-recommends -y git\
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
 # Shortcut for python3
 RUN echo -e '\nalias py=python3\n' >> ~/.bashrc
