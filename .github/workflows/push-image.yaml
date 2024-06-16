@@ -34,11 +34,13 @@ jobs:
         id: date
         run: echo "NOW=$(date +'%y.%-m.%-d')" >> $GITHUB_ENV
 
-      - name: ECHO current date
-        run: echo $NOW
+      - name: Dry Run
+        run: echo ${{ github.repository }}:${{ env.NOW }}
 
-      - name: SEE what tags I get
-        run: echo ${{ steps.meta.outputs.tags }}
-
-      - name: SEE what labels I get
-        run: echo ${{ steps.meta.outputs.labels }}
+      # - name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     push: true
+      #     tags:
+      #       - ${{ github.repository }}:latest
+      #       - ${{ github.repository }}:${{ env.NOW }}
