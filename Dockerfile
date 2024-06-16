@@ -33,5 +33,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y git\
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+# Install Valgrind
+RUN apt-get update && apt-get install --no-install-recommends -y valgrind\
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
 # Shortcut for python3
 RUN echo -e '\nalias py=python3\n' >> ~/.bashrc
