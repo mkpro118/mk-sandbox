@@ -1,0 +1,37 @@
+name: Push image to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+      - push-image
+
+
+jobs:
+  push_to_registry:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USR }}
+          password: ${{ secrets.DOCKER_PAT }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ github.repository }}
+
+      - name: SEE what tags I get
+        run: echo ${{ steps.meta.outputs.tags }}
+
+      - name: SEE what labels I get
+        run: echo ${{ steps.meta.outputs.labels }}
