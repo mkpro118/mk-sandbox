@@ -47,5 +47,11 @@ RUN echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
 ENV HOME /home/root
 WORKDIR $HOME
 
+# Install Git Prompt
+RUN wget -O ~/.git-prompt.sh --no-check-certificate \
+ https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
+ && rm -fr ~/.wget-hsts
+
+
 # Shortcut for python3
 RUN echo 'alias py=python3' >> ~/.bashrc
