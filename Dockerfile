@@ -44,6 +44,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y bash-completion
  && rm -rf /var/lib/apt/lists/*
 RUN echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
 
+ENV HOME /home/root
+WORKDIR $HOME
 
 # Shortcut for python3
 RUN echo 'alias py=python3' >> ~/.bashrc
