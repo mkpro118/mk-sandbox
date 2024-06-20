@@ -51,7 +51,10 @@ WORKDIR $HOME
 RUN wget -O ~/.git-prompt.sh --no-check-certificate \
  https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
  && rm -fr ~/.wget-hsts
+RUN echo "source ~/.git-prompt.sh" >> ~/.bashrc
 
+# Setup User Prompts
+RUN echo "export PS1='\\[\\e[1m\\]\\[\\e[32m\\]\\u\\[\\e[0m\\]\\[\\e[35m\\] @\\[\\e[0m\\] \\[\\e[3m\\]\\[\\e[34m\\]\\W\\[\\e[0m\\] \$(__git_ps1 \"\\[\\e[35m\\]on \\[\\e[33m\\]\\[\\e[3m\\]%s \")\\[\\e[0m\\]\\[\\e[35m\\]\$\\[\\e[0m\\]\\[\\e[33m\\]:\\[\\e[0m\\] \\[\\e[36m\\]'" >> ~/.bashrc
 
 # Shortcut for python3
 RUN echo 'alias py=python3' >> ~/.bashrc
