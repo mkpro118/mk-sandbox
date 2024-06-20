@@ -38,5 +38,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y valgrind\
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+# Install Bash Completion
+RUN apt-get update && apt-get install --no-install-recommends -y bash-completion\
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+RUN echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
+
+
 # Shortcut for python3
-RUN echo -e '\nalias py=python3\n' >> ~/.bashrc
+RUN echo 'alias py=python3' >> ~/.bashrc
