@@ -58,3 +58,6 @@ RUN echo "export PS1='\\[\\e[1m\\]\\[\\e[32m\\]\\u\\[\\e[0m\\]\\[\\e[35m\\] @\\[
 
 # Shortcut for python3
 RUN echo 'alias py=python3' >> ~/.bashrc
+
+# Upgrade python
+RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
