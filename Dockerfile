@@ -4,7 +4,8 @@ SHELL ["bash", "-c"]
 
 # Need to install wget to fetch sources from the internet
 # Install GCC, G++, Python, CPython Headers, Build Essential tools like Make
-RUN apt-get update && apt-get install --no-install-recommends -y wget build-essential python3.11 python3-pip python3-dev libpython3.11-dev\
+RUN apt-get update && apt-get install --no-install-recommends -y ca-certificates\
+ wget build-essential python3.11 python3.11-venv python3-pip python3-dev libpython3.11-dev\
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -57,7 +58,19 @@ RUN echo "source ~/.git-prompt.sh" >> ~/.bashrc
 RUN echo "export PS1='\\[\\e[1m\\]\\[\\e[32m\\]\\u\\[\\e[0m\\]\\[\\e[35m\\] @\\[\\e[0m\\] \\[\\e[3m\\]\\[\\e[34m\\]\\W\\[\\e[0m\\] \$(__git_ps1 \"\\[\\e[35m\\]on \\[\\e[33m\\]\\[\\e[3m\\]%s \")\\[\\e[0m\\]\\[\\e[35m\\]\$\\[\\e[0m\\]\\[\\e[33m\\]:\\[\\e[0m\\] \\[\\e[36m\\]'" >> ~/.bashrc
 
 # Shortcut for python3
-RUN echo 'alias py=python3' >> ~/.bashrc
+RUN echo "alias py=python3.11" >> ~/.bashrc
+RUN echo "alias python=python3.11" >> ~/.bashrc
+RUN echo "alias python3=python3.11" >> ~/.bashrc
+RUN echo "alias pip='python3.11 -m pip'" >> ~/.bashrc
 
 # Upgrade python
-RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+RUN python3.11 -m pip list --outdated --format=freeze \
+ | grep -v '^\-e' \
+ | cut -d = -f 1 \
+ | xargs -n1 python3.11 -m pip install -U
+
+# For some reason, python3-pip installs pip with python3.10
+# Remove python3.10
+RUN find /usr/bin/ | grep "3.10" | xargs -n1 rm -fr
+
+ENTRYPOINT ["bash"]
