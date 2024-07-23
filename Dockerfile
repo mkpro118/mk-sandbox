@@ -26,8 +26,9 @@ RUN apt-get install --no-install-recommends -y nodejs \
  && rm -rf /var/lib/apt/lists/*
 
 # Install Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN source /root/.cargo/env
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+ENV PATH="$PATH:/root/.cargo/bin"
+RUN rustup update && rustup install stable
 
 # Install Git
 RUN apt-get update && apt-get install --no-install-recommends -y git\
